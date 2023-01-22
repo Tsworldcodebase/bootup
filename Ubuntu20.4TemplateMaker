@@ -1,0 +1,14 @@
+##VMware-Linux template script##
+#!/bin/bash
+apt update && apt -y upgrade && apt -y autoremove && apt clean
+userdel -r tyler
+truncate -s0 /etc/hostname
+hostnamectl set-hostname localhost
+rm /etc/netplan/50-cloud-init.yaml
+truncate -s0 /etc/machine-id
+rm /var/lib/dbus/machine-id
+ln -s /etc/machine-id /var/lib/dbus/machine-id
+cloud-init clean
+truncate -s0 ~/.bash_history
+history -c
+shutdown -h now
